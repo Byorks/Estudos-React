@@ -1,7 +1,20 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
+import TaskPage from "./pages/TaskPage.jsx"
 import "./index.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+const router = createBrowserRouter ([ 
+  {
+    path: "/",
+    element: <App />
+  },
+  {
+    path: "/task",
+    element: <TaskPage />
+  }
+])
 
 // Aqui estamos trazendo o conteúdo de App e implementando com .render onden o elemento escolhido é o Id -> root;
 // Estamos renderizando um componente;
@@ -9,6 +22,6 @@ import "./index.css";
 // StrictMdode ajuda no processo de desenvolvimento, mas preciso pesquisar como.
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </StrictMode>
 );

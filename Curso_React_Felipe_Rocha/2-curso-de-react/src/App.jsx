@@ -4,66 +4,70 @@ import Tasks from "./components/Tasks";
 import "./App.css";
 
 import { useState } from "react";
+import { useEffect } from "react";
+
+// Uuid - gerador de Ids aleátorios
+import { v4 } from "uuid";
 
 function App() {
-  const [tasks, setTasks] = useState([{
-    id: 1,
-    title: "Estudar programação",
-    description: "Estudar programação para se tornar um desenvolvedor full stack",
-    isCompleted: false
-  }, {
-    id: 2,
-    title: "Fazer compras",
-    description: "Comprar arroz, feijão, carne, legumes e frutas",
-    isCompleted: false
-  }, {
-    id: 3,
-    title: "Estudar inglês",
-    description: "Estudar inglês para se tornar fluente",
-    isCompleted: false
-  }
-  ]);
+  const [tasks, setTasks] = useState(
+    // Buscando as tarefas no localStorage e caso não tenha, inicia uma lista vazia
+    JSON.parse(localStorage.getItem("tasks")) || []
+  );
 
-  const onAddTaskSubmit = () => {
-    let title = document.getElementById("form-title").value;
-    let description = document.getElementById("form-description").value;
+  // Vai atualizar a página sempre que o elemento na lista for alterado
+  useEffect(() => { // Esse código será executado sempre que um elemento for montado na tela
+    console.log("tasks foi alterado");
+    // criando um armazenamento no localStorage e o a lista tasks para uma string JSON
+    // Primeiro param é o nome do dado armazenado
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  },  [tasks]) // O array vazio garante que o código será executado apenas uma vez, na montagem
 
-    let lastId;
-    // Pegando o valor do ultimo Id regitrado
-    if (tasks.length > 0) {
-       lastId = tasks[ tasks.length -1].id;
-    }
+  // Minha tentativa sem consultar o material do instrutor
+  // const onAddTaskSubmit = () => {
+  //   let title = document.getElementById("form-title").value;
+  //   let description = document.getElementById("form-description").value;
+
+  //   let newTaskId;
+  //   // Pegando o valor do ultimo Id regitrado
+  //   // Verificação se há itens na lista, se tiver pegamos o id do ultimo item, se não, será 0 o ínicio da lista
+  //   if (tasks.length > 0) {
+  //     newTaskId = tasks[ tasks.length -1].id + 1;
+  //   }else {
+  //     newTaskId = 0;
+  //   }
+
+  //   let newTask = {
+  //      id: newTaskId,
+  //      title: title,
+  //      description: description,
+  //      isCompleted: false,
+  //   }
     
-    console.log(lastId)
+  //   // Adicionando na lista tasks
+  //   tasks.push(newTask);
 
-    let newTaskId;
+  //   let updatedTasks = tasks.map( task => task)
 
-    if (lastId) {
-      newTaskId = 0;
-    }else {
-      newTaskId = lastId + 1;
-    }
+  //   setTasks(updatedTasks);
+  // }
 
-    // lastId == null ? newTaskId : lastId + 1;
+  // função criada pelo instrutor 
+  function onAddTaskSubmit (title, description) {
+    const newTask = {
+      // Id dessa maneira pode ocazionar em ids repetidos
+      // Para solucionar vamos gerar ids aleatorios com o uuid
+      // id: tasks.length + 1,
+      id: v4(),
+      // shorthand sintax, abreviando já que a propriedade tem o mesmo nome da propriedade do obj
+      title,
+      description,
+      iscompleted: false
+    };
 
-    let newTask = {
-       id: newTaskId,
-       title: title,
-       description: description,
-       isCompleted: false,
-    }
-
-    console.log(`esse é a tarefa criada`);
-    console.log(newTask)
-    
-    // Adicionando na lista tasks
-    tasks.push(newTask);
-
-    let updatedTasks = tasks.map( task => task)
-
-    setTasks(updatedTasks);
+    setTasks([...tasks, newTask])
   }
-
+  
   function onTaskClick(taskId) {
     // Essa função vai passar por todas as tasks e identificar qual tem o id da tarefa clicada, alterando o valor dela para o inverso do estado atual
     const newTasks = tasks.map( task => {

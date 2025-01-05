@@ -1,10 +1,26 @@
 import { Trash2 } from "lucide-react";
 import { DeleteIcon } from "lucide-react";
 import { ChevronRightIcon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function Tasks(props) {
     // Exemplo de acesso a props que vem de um useState([]), onde pegamos apenas o titulo
     // return <h1>{props.tasks[0].title}</h1>
+    const navigate = useNavigate();
+
+    // Se a função tem muitas linhas melhor deixar separado como essa função
+    function onSeeDetailsClick (task) {
+        // Vai tratar a URL para evitar erros, por exemplon  modificando espaços que possam estar contídos nas variáveis
+        const query = new URLSearchParams();
+        query.set("title", task.title);
+        query.set("description", task.description);
+        
+        // Sem tratamento
+        // navigate(`/task?title=${task.title}&description=${task.description}`);
+
+        // Com tratamento
+        navigate(`/task?${query.toString()}`); 
+    }
 
     return (   
     //  space-y-4 -> espaçamento vertical entre os itens, internamente ele coloca margin top e margin bottom
@@ -23,9 +39,9 @@ function Tasks(props) {
                 >
                     {task.title}
                     {/* Usando operador ternário para verificar a Task */}
-                    {task.isCompleted ? "Completed" : "Incomplete"}
+                    {task.isCompleted ? " Completed" : " Incomplete"}
                 </button>
-                <button className="bg-slate-400 p-2 rounded-md text-white">
+                <button onClick={() => onSeeDetailsClick(task)} className="bg-slate-400 p-2 rounded-md text-white">
                     <ChevronRightIcon />
                 </button>
                 <button onClick={() => props.deleteTask(task.id)} className="bg-slate-400 p-2 rounded-md text-white">
