@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import Input from "./input";
 // Escrevemos os nomes das funções no estilo PascalCase
 function AddTask ({onAddTaskSubmit}) {
     // Pegando os valores dos inputs com States
@@ -7,22 +8,20 @@ function AddTask ({onAddTaskSubmit}) {
     const [description, setDescription] = useState("");
     return (
         <div className="space-y-4 p-6 bg-slate-200 rounded-md shadow flex flex-col">
-            <input 
+            <Input
                 type="text" 
                 name="title" 
                 id="form-title"
                 placeholder="Digite o título da tarefa" 
-                className="border border-slate-300 outline-slate-400 px-4 py-2 rounded-md" 
                 // Sempre que estivermos dentro de um return e quisermos usar Javascript utilizamos chaves {}
                 value={title}
                 onChange={(event) => setTitle(event.target.value)}
             />
-            <input 
+            <Input
                 type="text" 
                 name="description" 
                 id="form-description" 
-                placeholder="Digite a descrição da tarefa" 
-                className="border border-slate-300 outline-slate-400 px-4 py-2 rounded-md" 
+                placeholder="Digite a descrição da tarefa"
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
             />

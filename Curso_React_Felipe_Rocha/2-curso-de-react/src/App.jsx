@@ -21,7 +21,26 @@ function App() {
     // criando um armazenamento no localStorage e o a lista tasks para uma string JSON
     // Primeiro param é o nome do dado armazenado
     localStorage.setItem("tasks", JSON.stringify(tasks));
-  },  [tasks]) // O array vazio garante que o código será executado apenas uma vez, na montagem
+  },  [tasks]);  // Já que passamos uma lista, sempre que tiver alterações na lista, terá atualizações de state e executará o código acima
+ 
+
+  useEffect(() =>{
+     const fetchTasks = async () => {
+       // Chama a API
+      // Quando não específicamos o método HTTP automaticamente ele atribui o GET
+      const response = await fetch ('https://jsonplaceholder.typicode.com/todos?_limit=10');
+
+      // Pegar os dados que ela retorna
+      // Convertendo para json
+      const data = await response.json()
+      // Armazenar/ Persistir esses dados no STATE
+      setTasks(data)
+    }
+    // Caso queira chamar uma API 
+    // fetchTasks();
+
+  },[]); // O array vazio garante que o código será executado apenas uma vez, na montagem
+
 
   // Minha tentativa sem consultar o material do instrutor
   // const onAddTaskSubmit = () => {

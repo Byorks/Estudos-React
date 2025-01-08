@@ -2,6 +2,7 @@ import { Trash2 } from "lucide-react";
 import { DeleteIcon } from "lucide-react";
 import { ChevronRightIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Button from "./Button";
 
 function Tasks(props) {
     // Exemplo de acesso a props que vem de um useState([]), onde pegamos apenas o titulo
@@ -41,12 +42,12 @@ function Tasks(props) {
                     {/* Usando operador ternário para verificar a Task */}
                     {task.isCompleted ? " Completed" : " Incomplete"}
                 </button>
-                <button onClick={() => onSeeDetailsClick(task)} className="bg-slate-400 p-2 rounded-md text-white">
+                <Button onClick={() => onSeeDetailsClick(task)} className="bg-slate-400 p-2 rounded-md text-white">
                     <ChevronRightIcon />
-                </button>
-                <button onClick={() => props.deleteTask(task.id)} className="bg-slate-400 p-2 rounded-md text-white">
+                </Button>
+                <Button onClick={() => props.deleteTask(task.id)} className="bg-slate-400 p-2 rounded-md text-white">
                     <Trash2 />
-                </button>
+                </Button>
             </li>
         
         ))}
