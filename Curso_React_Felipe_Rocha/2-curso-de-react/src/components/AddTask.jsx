@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
-import Input from "./input";
+import Input from "./Input";
+
 // Escrevemos os nomes das funções no estilo PascalCase
 function AddTask ({onAddTaskSubmit}) {
     // Pegando os valores dos inputs com States
