@@ -8,6 +8,7 @@ import { useEffect } from "react";
 
 // Uuid - gerador de Ids aleátorios
 import { v4 } from "uuid";
+import Title from "./components/Title";
 
 function App() {
   const [tasks, setTasks] = useState(
@@ -164,7 +165,7 @@ function App() {
       {/* Podemos atribuir classes CSS com className */}
       {/* <h1 className="title">Gerenciador de Tarefas (Com alteração de cor CSS puro)</h1> */}
       {/* <h1 className="text-red-500">Gerenciador de Tarefas</h1> */}
-      <h1 className="text-3xl text-slate-100 font-bold text-center">Gerenciador de Tarefas</h1>
+      <Title className="text-3xl text-slate-100 font-bold text-center">Gerenciador de Tarefas</Title>
       <AddTask onAddTaskSubmit={onAddTaskSubmit}/>
       {/* Aqui estamos dizendo que as props serão o states que insererimos no useState */}
       <Tasks tasks={tasks} onTaskClick={onTaskClick} deleteTask={deleteTask} /> {/* Podemos passar uma função como prop */}
