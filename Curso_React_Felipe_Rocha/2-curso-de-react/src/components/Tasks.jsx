@@ -3,6 +3,7 @@ import { DeleteIcon } from "lucide-react";
 import { ChevronRightIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
+import { CheckIcon } from "lucide-react";
 
 function Tasks(props) {
     // Exemplo de acesso a props que vem de um useState([]), onde pegamos apenas o titulo
@@ -36,8 +37,11 @@ function Tasks(props) {
                 {/* Fiquei pensando se funcionaria, com um simples "props.onTaskClick(task.id)" mas pelo visto ele executaria assim que o componete fosse renderizado */}
                 <button onClick={() => props.onTaskClick(task.id)}
                 // Podemos criar classes com template string integrando Javascript
-                className={`bg-slate-400 text-left w-full text-white p-2 rounded-md ${task.isCompleted && 'line-through'}`}
-                >
+                className={`bg-slate-400 text-left w-full flex items-center gap-2 text-white p-2 rounded-md ${task.isCompleted && 'line-through'}`}
+                >   
+                    {/* Usando operador AND, se task.isCompleted for verdade, o icone aparece */}
+                    {/* if não funciona no jsx */}
+                    {task.isCompleted || <CheckIcon/>}
                     {task.title}
                     {/* Usando operador ternário para verificar a Task */}
                     {task.isCompleted ? " Completed" : " Incomplete"}
