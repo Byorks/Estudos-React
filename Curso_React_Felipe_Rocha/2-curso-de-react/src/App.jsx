@@ -9,12 +9,17 @@ import { useEffect } from "react";
 // Uuid - gerador de Ids aleátorios
 import { v4 } from "uuid";
 import Title from "./components/Title";
+import { useNavigate } from "react-router-dom";
+import UpdateTaskPage from "./pages/UpdateTaskPage";
+
 
 function App() {
   const [tasks, setTasks] = useState(
     // Buscando as tarefas no localStorage e caso não tenha, inicia uma lista vazia
     JSON.parse(localStorage.getItem("tasks")) || []
   );
+  
+  const navigate = useNavigate();
 
   // Vai atualizar a página sempre que o elemento na lista for alterado
   useEffect(() => { // Esse código será executado sempre que um elemento for montado na tela
@@ -111,6 +116,7 @@ function App() {
     }
   }
 
+
   // onDeleteTaskClick - padrão de nomeclatura quando a função está relacionada a uma ação como clicar em um botão, enviar um formulário, etc / segue a ideia de event handlers
   function deleteTask(taskId) {
     // Tentativa falha de com o forEach pegar o objeto a partir da lista
@@ -156,6 +162,33 @@ function App() {
     setTasks(updateTasks)
   } 
 
+  const onTaskUpdate = (task) => {
+    let taskToBeUpdatedIndex = tasks.findIndex((taskf) =>  {
+      return taskf.id == task.id
+    });
+    
+    // Utilizando State do navigate para passar as propriedades internamente pelo ReacRouter
+    navigate('/taskUpdate', { state: { taskIndex: taskToBeUpdatedIndex, taskTitle: task.title, taskDescription: task.description} });
+    
+  }
+
+
+  const updateTask = (newTitle, newDescription, taskId) => {
+    
+     let taskToBeUpdatedIndex = tasks.findIndex(taskId);
+    // Inserir os novos valores
+    tasks[taskToBeUpdatedIndex] = {
+      ...tasks[taskToBeUpdatedIndex],
+      title: newTitle,
+      description: newDescription
+    };
+
+
+    // Substituir pela a task no mesmo índice 
+    setTasks [[...tasks]];
+  }
+
+
   return(
   // p-6 -> padding de 24px / 1.5 rem
   // w-screen e h-screen -> 100vw e 100vh - que é pegar 100% da visualização do usuário
@@ -168,7 +201,7 @@ function App() {
       <Title className="text-3xl text-slate-100 font-bold text-center">Gerenciador de Tarefas</Title>
       <AddTask onAddTaskSubmit={onAddTaskSubmit}/>
       {/* Aqui estamos dizendo que as props serão o states que insererimos no useState */}
-      <Tasks tasks={tasks} onTaskClick={onTaskClick} deleteTask={deleteTask} /> {/* Podemos passar uma função como prop */}
+      <Tasks tasks={tasks} onTaskClick={onTaskClick} deleteTask={deleteTask} onTaskUpdate={onTaskUpdate} /> {/* Podemos passar uma função como prop */}
     </div>
   </div>)  
 }

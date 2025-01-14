@@ -4,6 +4,8 @@ import { ChevronRightIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import { CheckIcon } from "lucide-react";
+import { RefreshCw } from "lucide-react";
+import UpdateTaskPage from "../pages/UpdateTaskPage";
 
 function Tasks(props) {
     // Exemplo de acesso a props que vem de um useState([]), onde pegamos apenas o titulo
@@ -24,6 +26,10 @@ function Tasks(props) {
         navigate(`/task?${query.toString()}`); 
     }
 
+    function onUpdateTask (task) {
+       
+    }
+
     return (   
     //  space-y-4 -> espaçamento vertical entre os itens, internamente ele coloca margin top e margin bottom
     <ul className="space-y-4 p-6 bg-slate-200 rounded-md shadow">
@@ -41,15 +47,19 @@ function Tasks(props) {
                 >   
                     {/* Usando operador AND, se task.isCompleted for verdade, o icone aparece */}
                     {/* if não funciona no jsx */}
-                    {task.isCompleted || <CheckIcon/>}
+                    {task.isCompleted && <CheckIcon/>}
                     {task.title}
                     {/* Usando operador ternário para verificar a Task */}
                     {task.isCompleted ? " Completed" : " Incomplete"}
                 </button>
-                <Button onClick={() => onSeeDetailsClick(task)} className="bg-slate-400 p-2 rounded-md text-white">
+                <Button onClick={() => props.onTaskUpdate(task)}>
+                    <RefreshCw></RefreshCw>
+                    
+                </Button>
+                <Button onClick={() => onSeeDetailsClick(task)}>
                     <ChevronRightIcon />
                 </Button>
-                <Button onClick={() => props.deleteTask(task.id)} className="bg-slate-400 p-2 rounded-md text-white">
+                <Button onClick={() => props.deleteTask(task.id)}>
                     <Trash2 />
                 </Button>
             </li>

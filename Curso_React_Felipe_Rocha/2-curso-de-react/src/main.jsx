@@ -4,6 +4,7 @@ import App from "./App.jsx";
 import TaskPage from "./pages/TaskPage.jsx"
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import UpdateTaskPage from "./pages/UpdateTaskPage.jsx";
 
 const router = createBrowserRouter ([ 
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter ([
   {
     path: "/task",
     element: <TaskPage />
+  },
+  {
+    path: "/taskupdate",
+    element: <UpdateTaskPage />
   }
 ])
 
